@@ -1,0 +1,43 @@
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+    content: [
+        "./app/**/*.{js,ts,jsx,tsx,mdx}",
+        "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    ],
+    theme: {
+        extend: {
+            colors: {
+                background: "var(--background)",
+                surface: "var(--surface)",
+                "surface-elevated": "var(--surface-elevated)",
+                border: "var(--border)",
+                "main-text": "var(--text-main)",
+                "muted-text": "var(--text-muted)",
+                "accent-main": "var(--accent-main)",
+                "accent-main-hover": "var(--accent-main-hover)",
+            },
+            borderRadius: {
+                card: "var(--radius-card)",
+                control: "var(--radius-control)",
+            },
+            fontFamily: {
+                sans: ['var(--font-jakarta)', 'sans-serif'],
+            },
+            animation: {
+                'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                'shimmer': 'shimmer 1.5s infinite',
+            },
+            keyframes: {
+                fadeInUp: {
+                    '0%': { opacity: '0', transform: 'translateY(20px)' },
+                    '100%': { opacity: '1', transform: 'translateY(0)' },
+                },
+                shimmer: {
+                    '0%': { transform: 'translateX(-100%)' },
+                    '100%': { transform: 'translateX(100%)' },
+                }
+            }
+        },
+    },
+    plugins: [],
+};
