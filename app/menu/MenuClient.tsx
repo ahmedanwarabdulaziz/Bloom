@@ -3,7 +3,6 @@
 import { useState, useDeferredValue, useRef, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import MobileContainer from "@/components/MobileContainer";
 import { ArrowBack, Search, Clear, Restaurant } from "@mui/icons-material";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -238,12 +237,11 @@ export default function MenuClient({ categories, items }: MenuClientProps) {
     );
 
     return (
-        <MobileContainer disablePadding>
-            <main className="flex-1 w-full relative flex flex-col min-h-screen bg-background">
+        <main className="flex-1 w-full relative flex flex-col min-h-screen bg-background">
 
                 {/* 1. Header and Navigation - Static in fixed-height layout */}
                 <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-xl border-b border-border shadow-sm">
-                    <div className="px-4 pt-4 pb-3 flex flex-col">
+                    <div className="w-full max-w-7xl mx-auto px-4 pt-4 pb-3 flex flex-col">
                         {/* Top Bar */}
                         <div className="flex items-center justify-between z-10 bg-background/0">
                             <Link href="/" className="h-10 w-10 flex-shrink-0 rounded-control bg-surface border border-border flex items-center justify-center text-main-text hover:bg-surface-elevated active:scale-95 transition-all">
@@ -309,7 +307,7 @@ export default function MenuClient({ categories, items }: MenuClientProps) {
                     </div>
 
                     {/* Main Category Toggle (Food / Drinks) */}
-                    <div className="px-4 pt-3 w-full flex gap-2 justify-center">
+                    <div className="w-full max-w-7xl mx-auto px-4 pt-3 flex gap-2 justify-center">
                         <button
                             onClick={() => {
                                 setActiveMainCategory('food');
@@ -339,7 +337,7 @@ export default function MenuClient({ categories, items }: MenuClientProps) {
                     </div>
 
                     {/* Horizontal Categories Tabs */}
-                    <div className="px-4 pb-3 pt-4 overflow-x-auto no-scrollbar flex gap-2 w-full">
+                    <div className="w-full max-w-7xl mx-auto px-4 pb-3 pt-4 overflow-x-auto no-scrollbar flex gap-2">
                         <button
                             onClick={() => setActiveCategory("ALL")}
                             className={`flex-none px-5 py-2 rounded-full text-sm font-semibold transition-all active:scale-95 ${
@@ -367,7 +365,7 @@ export default function MenuClient({ categories, items }: MenuClientProps) {
                 </div>
 
                 {/* 2. Menu Items List */}
-                <div className="px-4 pb-24 z-10 flex-1 w-full pt-4">
+                <div className="px-4 pb-24 z-10 flex-1 w-full pt-6 max-w-7xl mx-auto">
                     <div className="space-y-4">
                         <AnimatePresence mode="wait">
                             {activeCategory === "ALL" ? (
@@ -379,10 +377,10 @@ export default function MenuClient({ categories, items }: MenuClientProps) {
 
                                         return (
                                             <div key={cat.id} className="space-y-3">
-                                                <h2 className="text-main-text font-bold text-lg px-1 pb-1 inline-block tracking-wide">
+                                                <h2 className="text-main-text font-bold text-xl md:text-2xl px-1 pb-2 inline-block tracking-wide mt-4 border-b border-white/10 mb-2">
                                                     {cat.name}
                                                 </h2>
-                                                <div className="space-y-4">
+                                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
                                                     {catItems.map((item, i) => (
                                                         <MenuItemCard key={item.id} item={item} index={i} />
                                                     ))}
@@ -403,7 +401,7 @@ export default function MenuClient({ categories, items }: MenuClientProps) {
                                     )}
                                 </div>
                             ) : (
-                                <div className="space-y-4">
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6 pt-4">
                                     {activeItems.map((item, i) => (
                                         <MenuItemCard key={item.id} item={item} index={i} />
                                     ))}
@@ -423,7 +421,6 @@ export default function MenuClient({ categories, items }: MenuClientProps) {
                     </div>
                 </div>
 
-            </main>
-        </MobileContainer>
+        </main>
     );
 }

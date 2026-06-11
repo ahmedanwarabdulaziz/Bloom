@@ -26,6 +26,7 @@ module.exports = {
             animation: {
                 'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
                 'shimmer': 'shimmer 1.5s infinite',
+                'marquee': 'marquee 40s linear infinite',
             },
             keyframes: {
                 fadeInUp: {
@@ -35,6 +36,10 @@ module.exports = {
                 shimmer: {
                     '0%': { transform: 'translateX(-100%)' },
                     '100%': { transform: 'translateX(100%)' },
+                },
+                marquee: {
+                    '0%': { transform: 'translateX(0%)' },
+                    '100%': { transform: 'translateX(-50%)' },
                 }
             }
         },

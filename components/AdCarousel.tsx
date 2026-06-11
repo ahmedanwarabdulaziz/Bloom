@@ -52,53 +52,53 @@ export default function AdCarousel({ settings }: AdCarouselProps) {
     }, [nextSlide]);
 
     return (
-        <div className="relative w-full h-full flex-1 rounded-card overflow-hidden border border-accent-main/50 shadow-[0_4px_20px_rgba(45,212,191,0.15)] group bg-surface/50">
+        <div className="relative w-full h-full flex-1 rounded-card overflow-hidden border border-accent-main/50 shadow-[0_4px_20px_rgba(212,175,55,0.15)] group bg-surface/50 md:p-4 md:bg-transparent md:border-none md:shadow-none">
             
-            {/* Sliding Track */}
+            {/* Sliding Track (Mobile) / Grid (Desktop) */}
             <div 
-                className="flex w-full h-full transition-transform duration-500 ease-in-out"
+                className="flex md:grid md:grid-cols-3 md:gap-4 w-full h-full transition-transform duration-500 ease-in-out md:!transform-none"
                 style={{ transform: `translateX(-${activeIndex * 100}%)` }}
             >
                 {slides.map((slide) => (
-                    <div key={slide.id} className="min-w-full h-full relative flex-shrink-0 bg-gradient-to-br from-accent-main/10 via-surface/80 to-accent-main/5 flex flex-col items-center justify-center">
+                    <div key={slide.id} className="min-w-full md:min-w-0 md:w-full h-full relative flex-shrink-0 bg-gradient-to-br from-accent-main/10 via-surface/80 to-accent-main/5 flex flex-col items-center justify-center md:rounded-card md:overflow-hidden md:border md:border-accent-main/30 md:shadow-lg">
                         {slide.image ? (
                             <>
                                 <Image src={slide.image} alt={`${slide.placeholderSlot} Ad Banner`} fill className="object-cover" />
                                 {(slide.title || slide.desc) && (
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent px-4 pt-4 pb-10 flex flex-col justify-end pointer-events-none max-h-[100%] overflow-y-auto no-scrollbar">
-                                        {slide.title && <h3 className="text-accent-main font-bold text-lg sm:text-2xl drop-shadow-md leading-tight shrink-0 pointer-events-auto uppercase tracking-wide">{slide.title}</h3>}
-                                        {slide.desc && <p className="text-white/95 text-[11px] sm:text-sm mt-1 leading-snug drop-shadow-sm pointer-events-auto shrink-0">{slide.desc}</p>}
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent px-4 pt-4 pb-10 flex flex-col justify-end pointer-events-none max-h-[100%] overflow-y-auto no-scrollbar md:pb-6">
+                                        {slide.title && <h3 className="text-accent-main font-bold text-lg sm:text-xl md:text-2xl drop-shadow-md leading-tight shrink-0 pointer-events-auto uppercase tracking-wide">{slide.title}</h3>}
+                                        {slide.desc && <p className="text-white/95 text-[11px] sm:text-xs md:text-sm mt-1 leading-snug drop-shadow-sm pointer-events-auto shrink-0">{slide.desc}</p>}
                                     </div>
                                 )}
                             </>
                         ) : (
                             <>
                                 <span className="text-accent-main/80 text-sm font-bold tracking-widest uppercase mb-1 drop-shadow-sm">Ad Space</span>
-                                <span className="text-accent-main/50 text-xs font-medium">{slide.placeholderSlot} Banner Placeholder</span>
+                                <span className="text-accent-main/50 text-xs font-medium text-center px-2">{slide.placeholderSlot} Banner Placeholder</span>
                             </>
                         )}
                     </div>
                 ))}
             </div>
 
-            {/* Navigation Arrows */}
+            {/* Navigation Arrows (Mobile only) */}
             <button 
                 onClick={prevSlide}
-                className="absolute left-2 lg:left-4 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/40 text-white backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-accent-main hover:text-black z-10"
+                className="absolute left-2 lg:left-4 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/40 text-white backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-accent-main hover:text-black z-10 md:hidden"
                 aria-label="Previous Ad"
             >
                 <ChevronLeft fontSize="small" />
             </button>
             <button 
                 onClick={nextSlide}
-                className="absolute right-2 lg:right-4 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/40 text-white backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-accent-main hover:text-black z-10"
+                className="absolute right-2 lg:right-4 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/40 text-white backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-accent-main hover:text-black z-10 md:hidden"
                 aria-label="Next Ad"
             >
                 <ChevronRight fontSize="small" />
             </button>
 
-            {/* Pagination Dots */}
-            <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex space-x-1.5 z-10 p-1.5 rounded-full bg-black/30 backdrop-blur-sm">
+            {/* Pagination Dots (Mobile only) */}
+            <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex space-x-1.5 z-10 p-1.5 rounded-full bg-black/30 backdrop-blur-sm md:hidden">
                 {slides.map((_, idx) => (
                     <button
                         key={idx}
