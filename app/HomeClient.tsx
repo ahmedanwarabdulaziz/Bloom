@@ -17,9 +17,9 @@ export default function HomeClient({ featuredItems }: HomeClientProps) {
             <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-12 py-4 bg-background/80 backdrop-blur-md border-b border-white/5">
                 <div className="flex items-center gap-3 cursor-pointer">
                     <div className="relative w-10 h-10 md:w-12 md:h-12">
-                        <Image src="/images/general/logo.png" alt="Oasis Logo" fill className="object-contain" />
+                        <Image src="/images/general/logo.png" alt="Bloom Logo" fill className="object-contain" />
                     </div>
-                    <span className="font-extrabold text-lg tracking-widest uppercase hidden sm:block text-white">Oasis Grill</span>
+                    <span className="font-extrabold text-lg tracking-widest uppercase hidden sm:block text-white">Bloom</span>
                 </div>
                 <nav>
                     <Link href="/menu" className="text-sm font-bold tracking-wider text-white hover:text-accent-main transition-colors px-6 py-2.5 border border-white/10 rounded-full hover:border-accent-main/50 bg-white/5 shadow-sm">
@@ -32,8 +32,8 @@ export default function HomeClient({ featuredItems }: HomeClientProps) {
             <section className="relative w-full h-[100dvh] min-h-[600px] flex items-center justify-center pt-16">
                 <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
                     <Image 
-                        src="/images/general/as2d21w5.png" 
-                        alt="Oasis Grill Interior" 
+                        src="/images/general/as2d21w5.png"
+                        alt="Bloom Interior"
                         fill 
                         priority 
                         className="object-cover scale-[1.05] animate-[pulse_20s_ease-in-out_infinite_alternate]" 
@@ -44,21 +44,23 @@ export default function HomeClient({ featuredItems }: HomeClientProps) {
                 
                 <div className="relative z-10 flex flex-col items-center justify-center w-full px-6 max-w-5xl mx-auto text-center animate-fade-in-up">
                     <div className="relative w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 drop-shadow-2xl mb-6">
-                        <Image src="/images/general/logo.png" alt="Oasis Grill Logo" fill className="object-contain" priority />
+                        <Image src="/images/general/logo.png" alt="Bloom Logo" fill className="object-contain" priority />
                     </div>
                     <span className="text-accent-main font-bold tracking-[0.2em] uppercase text-sm md:text-base mb-4 drop-shadow-md">
-                        A TASTE OF THE MEDITERRANEAN IN MISSISSAUGA
+                        {/* TODO: replace with Bloom's own tagline/location */}
+                        WELCOME TO BLOOM
                     </span>
                     <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-tight text-white drop-shadow-xl uppercase leading-[1.1] mb-6">
-                        Flame-Grilled. <br className="md:hidden" />
-                        <span className="text-accent-main font-light italic">Shisha-Chilled.</span>
+                        {/* TODO: replace with Bloom's own headline */}
+                        Bloom
                     </h1>
                     <p className="text-gray-300 text-base sm:text-lg md:text-xl font-medium tracking-wide drop-shadow-md max-w-2xl mx-auto mb-10">
-                        Share mezze, flame-grilled kebabs, and signature mocktails in a beautiful space for families, friends, and celebrations.
+                        {/* TODO: replace with Bloom's own description */}
+                        Placeholder description — update with Bloom&apos;s copy.
                     </p>
                     <Link href="/menu" className="group">
                         <button className="relative overflow-hidden bg-white/10 backdrop-blur-md border border-white/20 text-white font-bold px-10 py-4 rounded-full text-lg shadow-[0_8px_32px_rgba(212,175,55,0.2)] flex items-center justify-center transition-all duration-300 hover:bg-accent-main hover:border-accent-main active:scale-[0.98]">
-                            <span className="relative z-10 tracking-widest">ENTER OASIS</span>
+                            <span className="relative z-10 tracking-widest">ENTER BLOOM</span>
                             <div className="relative z-10 ml-3 flex items-center justify-center transition-transform duration-300 group-hover:translate-x-1">
                                 <ArrowForward fontSize="medium" />
                             </div>
@@ -77,15 +79,13 @@ export default function HomeClient({ featuredItems }: HomeClientProps) {
             {/* 2. About / Concept Section */}
             <section className="relative w-full py-24 px-6 md:px-12 bg-background flex flex-col items-center">
                 <div className="max-w-4xl mx-auto text-center space-y-8">
+                    {/* TODO: replace with Bloom's own about copy */}
                     <h2 className="text-3xl md:text-5xl font-bold text-white tracking-tight">
-                        Grilled with care, <span className="text-accent-main">Shared with joy.</span>
+                        Welcome to <span className="text-accent-main">Bloom.</span>
                     </h2>
                     <div className="w-24 h-1 bg-gradient-to-r from-transparent via-accent-main to-transparent mx-auto rounded-full opacity-50" />
                     <p className="text-lg md:text-2xl text-muted-text leading-relaxed font-light">
-                        Great food starts with fresh halal ingredients, balanced marinades, and real charcoal. From juicy kebabs and Shish Tawook to tender lamb chops and golden wings, served with house-made dips, bright salads, and refreshing juices.
-                    </p>
-                    <p className="text-base md:text-xl text-muted-text/80 leading-relaxed font-light mt-4">
-                        Oasis Grill is the new spot in town. Warm service, a modern-classic dining room, and an oasis-like shisha lounge set the mood. Fire-kissed flavors, mellow nights, and moments you’ll want to repeat.
+                        Placeholder description — update with Bloom&apos;s copy.
                     </p>
                 </div>
             </section>
@@ -144,12 +144,13 @@ export default function HomeClient({ featuredItems }: HomeClientProps) {
                         <div className="flex flex-col text-center rounded-[var(--radius-card)] glass border border-white/5 hover:border-accent-main/30 transition-all duration-300 group overflow-hidden hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(212,175,55,0.15)]">
                             <div className="relative w-full h-56 md:h-64 overflow-hidden bg-background">
                                 <div className="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent z-10" />
-                                <Image src="/images/general/01.png" alt="Charcoal Grill & Mezze" fill className="object-cover transition-transform duration-700 group-hover:scale-110" />
+                                <Image src="/images/general/01.png" alt="Highlight 1" fill className="object-cover transition-transform duration-700 group-hover:scale-110" />
                             </div>
                             <div className="p-8 pt-6 relative z-20 bg-surface">
-                                <h3 className="text-2xl font-bold text-white mb-4 tracking-wide group-hover:text-accent-main transition-colors duration-300">Charcoal Grill &amp; Mezze</h3>
+                                {/* TODO: replace with Bloom's own highlight copy */}
+                                <h3 className="text-2xl font-bold text-white mb-4 tracking-wide group-hover:text-accent-main transition-colors duration-300">Highlight One</h3>
                                 <p className="text-muted-text text-base leading-relaxed">
-                                    Flame-kissed kebabs, Shish Tawook, and smoky moutabal. Cucumber-mint tzatziki, Yalangy, Haydari, Charred Shrimp, plus our Full Char-Roasted Chicken.
+                                    Placeholder description — update with Bloom&apos;s copy.
                                 </p>
                             </div>
                         </div>
@@ -157,12 +158,13 @@ export default function HomeClient({ featuredItems }: HomeClientProps) {
                         <div className="flex flex-col text-center rounded-[var(--radius-card)] glass border border-white/5 hover:border-accent-main/30 transition-all duration-300 group overflow-hidden hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(212,175,55,0.15)]">
                             <div className="relative w-full h-56 md:h-64 overflow-hidden bg-background">
                                 <div className="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent z-10" />
-                                <Image src="/images/general/02.png" alt="Oasis Shisha Lounge" fill className="object-cover transition-transform duration-700 group-hover:scale-110" />
+                                <Image src="/images/general/02.png" alt="Highlight 2" fill className="object-cover transition-transform duration-700 group-hover:scale-110" />
                             </div>
                             <div className="p-8 pt-6 relative z-20 bg-surface">
-                                <h3 className="text-2xl font-bold text-white mb-4 tracking-wide group-hover:text-accent-main transition-colors duration-300">Oasis Shisha Lounge</h3>
+                                {/* TODO: replace with Bloom's own highlight copy */}
+                                <h3 className="text-2xl font-bold text-white mb-4 tracking-wide group-hover:text-accent-main transition-colors duration-300">Highlight Two</h3>
                                 <p className="text-muted-text text-base leading-relaxed">
-                                    An oasis-style lounge with a gentle fountain. Settle in with signature mocktails and light bites as the night slows to easy conversation and unhurried comfort.
+                                    Placeholder description — update with Bloom&apos;s copy.
                                 </p>
                             </div>
                         </div>
@@ -183,10 +185,10 @@ export default function HomeClient({ featuredItems }: HomeClientProps) {
                 </div>
             </section>
 
-            {/* 3.5 The Oasis Experience Gallery */}
+            {/* 3.5 Gallery */}
             <section className="relative w-full py-20 bg-background border-t border-white/5 overflow-hidden">
                 <div className="text-center mb-12 relative z-10 px-6">
-                    <h2 className="text-3xl md:text-5xl font-bold text-white tracking-tight mb-4">The Oasis Experience</h2>
+                    <h2 className="text-3xl md:text-5xl font-bold text-white tracking-tight mb-4">The Bloom Experience</h2>
                     <div className="w-24 h-1 bg-gradient-to-r from-transparent via-accent-main to-transparent mx-auto rounded-full opacity-50" />
                 </div>
                 
@@ -222,29 +224,31 @@ export default function HomeClient({ featuredItems }: HomeClientProps) {
             {/* 4. Footer */}
             <footer className="w-full py-16 px-6 bg-black text-center flex flex-col items-center border-t border-white/10">
                 <div className="relative w-28 h-28 opacity-40 mb-8 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-500 cursor-pointer">
-                    <Image src="/images/general/logo.png" alt="Oasis Grill" fill className="object-contain" />
+                    <Image src="/images/general/logo.png" alt="Bloom" fill className="object-contain" />
                 </div>
                 <div className="flex flex-wrap justify-center gap-6 mb-8 text-sm font-medium tracking-widest text-muted-text uppercase">
                     <Link href="/menu" className="hover:text-accent-main transition-colors">Menu</Link>
                     <span className="text-white/20 hidden sm:inline">|</span>
-                    <a href="https://maps.app.goo.gl/EoLi6fnJk13kKSUWA" target="_blank" rel="noopener noreferrer" className="hover:text-accent-main transition-colors">Location</a>
+                    {/* TODO: replace with Bloom's Google Maps link */}
+                    <a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-accent-main transition-colors">Location</a>
                     <span className="text-white/20 hidden sm:inline">|</span>
                     <Link href="#" className="hover:text-accent-main transition-colors">Contact</Link>
                 </div>
-                {/* Social Links */}
+                {/* Social Links — TODO: replace with Bloom's own social URLs */}
                 <div className="flex gap-4 mb-8">
-                    <a href="https://www.instagram.com/oasisgrill.mississauga" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-accent-main hover:text-black hover:scale-110 transition-all duration-300">
+                    <a href="#" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-accent-main hover:text-black hover:scale-110 transition-all duration-300">
                         <Instagram fontSize="small" />
                     </a>
-                    <a href="https://www.facebook.com/profile.php?id=61581911354787" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-accent-main hover:text-black hover:scale-110 transition-all duration-300">
+                    <a href="#" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-accent-main hover:text-black hover:scale-110 transition-all duration-300">
                         <Facebook fontSize="small" />
                     </a>
                 </div>
                 <p className="text-muted-text/80 text-sm tracking-widest uppercase mb-4">
-                    33 Hillcrest Ave, Mississauga, ON L5B 1K5
+                    {/* TODO: replace with Bloom's address */}
+                    Address placeholder
                 </p>
                 <p className="text-muted-text/50 text-xs tracking-wider">
-                    &copy; {new Date().getFullYear()} OASIS GRILL. ALL RIGHTS RESERVED.
+                    &copy; {new Date().getFullYear()} BLOOM. ALL RIGHTS RESERVED.
                 </p>
             </footer>
 

@@ -248,7 +248,7 @@ export default function MenuClient({ categories, items }: MenuClientProps) {
                                 <ArrowBack fontSize="small" />
                             </Link>
                             <span className="text-main-text font-bold tracking-wide text-lg text-center absolute left-1/2 -translate-x-1/2">
-                                Oasis Grill
+                                Bloom
                             </span>
                             <button
                                 onClick={() => {

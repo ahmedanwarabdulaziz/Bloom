@@ -9,8 +9,8 @@ const jakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-    title: "Oasis Grill | Restaurant & Coffee Shop",
-    description: "Experience the finest food and drinks at Oasis Grill. A premium restaurant and coffee shop.",
+    title: "Bloom | Restaurant & Coffee Shop",
+    description: "Experience the finest food and drinks at Bloom. A premium restaurant and coffee shop.",
     manifest: "/manifest.json",
 };
 
@@ -26,8 +26,8 @@ export default function RootLayout({
     const jsonLd = {
         '@context': 'https://schema.org',
         '@type': 'Restaurant',
-        name: 'Oasis Grill',
-        description: 'Experience the finest food and drinks at Oasis Grill. A premium restaurant and coffee shop.',
+        name: 'Bloom',
+        description: 'Experience the finest food and drinks at Bloom. A premium restaurant and coffee shop.',
         hasMenu: '/menu'
     };
 

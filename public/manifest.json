@@ -1,7 +1,7 @@
 {
-  "name": "Oasis Grill",
-  "short_name": "Oasis Grill",
-  "description": "FLAME-GRILLED SHISHA-CHILLED",
+  "name": "Bloom",
+  "short_name": "Bloom",
+  "description": "Bloom",
   "start_url": "/menu",
   "display": "standalone",
   "background_color": "#121212",

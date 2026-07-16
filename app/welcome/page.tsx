@@ -29,7 +29,7 @@ export default async function Welcome() {
                         <div className="relative w-32 h-32 sm:w-48 sm:h-48 drop-shadow-xl">
                             <Image
                                 src="/images/general/logo.png"
-                                alt="Oasis Grill Logo"
+                                alt="Bloom Logo"
                                 fill
                                 className="object-contain"
                                 priority
@@ -43,10 +43,12 @@ export default async function Welcome() {
                         {/* Main Headline */}
                         <div className="text-center px-2 w-full shrink-0">
                             <h1 className="text-[13px] min-[375px]:text-[15px] min-[400px]:text-[16px] sm:text-xl md:text-3xl font-extrabold text-main-text leading-[1.1] tracking-tighter drop-shadow-md whitespace-nowrap">
-                                FLAME-GRILLED <span className="font-light text-accent-main">SHISHA-CHILLED</span>
+                                {/* TODO: replace with Bloom's own tagline */}
+                                WELCOME TO <span className="font-light text-accent-main">BLOOM</span>
                             </h1>
                             <p className="text-muted-text text-[11px] sm:text-sm md:text-base mt-2 font-medium max-w-[320px] md:max-w-2xl mx-auto opacity-90 hidden min-[375px]:block leading-relaxed">
-                                Share mezze, flame-grilled kebabs, and signature mocktails in a beautiful space for families, friends, and celebrations.
+                                {/* TODO: replace with Bloom's own description */}
+                                Placeholder description — update with Bloom&apos;s copy.
                             </p>
                         </div>
 
