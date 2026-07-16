@@ -9,7 +9,7 @@ export async function uploadFileToR2(file: File, folder: string): Promise<string
     const bytes = await file.arrayBuffer();
     const originalBuffer = Buffer.from(bytes);
 
-    let buffer = originalBuffer;
+    let buffer: Buffer = originalBuffer;
     let contentType = file.type;
     let extension = file.name.split(".").pop();
 
