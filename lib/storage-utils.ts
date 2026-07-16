@@ -1,22 +1,38 @@
 import { PutObjectCommand } from "@aws-sdk/client-s3";
 import { r2, bucketName } from "./storage";
 import { v4 as uuidv4 } from "uuid";
+import sharp from "sharp";
+
+const MAX_DIMENSION = 1600;
 
 export async function uploadFileToR2(file: File, folder: string): Promise<string> {
-    const extension = file.name.split(".").pop();
-    const filename = `${folder}/${uuidv4()}.${extension}`;
-
-    // Convert File to Buffer/ArrayBuffer
     const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
+    const originalBuffer = Buffer.from(bytes);
+
+    let buffer = originalBuffer;
+    let contentType = file.type;
+    let extension = file.name.split(".").pop();
+
+    try {
+        buffer = await sharp(originalBuffer)
+            .rotate()
+            .resize({ width: MAX_DIMENSION, height: MAX_DIMENSION, fit: "inside", withoutEnlargement: true })
+            .webp({ quality: 82 })
+            .toBuffer();
+        contentType = "image/webp";
+        extension = "webp";
+    } catch (e) {
+        console.error("Image optimization failed, uploading original file instead", e);
+    }
+
+    const filename = `${folder}/${uuidv4()}.${extension}`;
 
     await r2.send(
         new PutObjectCommand({
             Bucket: bucketName,
             Key: filename,
             Body: buffer,
-            ContentType: file.type,
-            // ACL: "public-read", // R2 doesn't always support ACLs depending on config, usually handled by public access settings
+            ContentType: contentType,
         })
     );
 
