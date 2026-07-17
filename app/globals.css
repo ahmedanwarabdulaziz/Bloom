@@ -4,13 +4,13 @@
 
 @layer base {
   :root {
-    --background: #020617;
-    --surface: #0F172A;
-    --surface-elevated: #1E293B;
-    --border: #334155;
-    
-    --text-main: #F8FAFC;
-    --text-muted: #94A3B8;
+    --background: #0D1C15;
+    --surface: #162D22;
+    --surface-elevated: #224735;
+    --border: #356E53;
+
+    --text-main: #F6F9F7;
+    --text-muted: #98B3A6;
     
     --accent-main: #D4AF37;
     --accent-main-hover: #B4922A;
@@ -41,14 +41,14 @@ body {
 
 /* Standard glass effects (refactored to use new tokens) */
 .glass {
-  background: rgba(15, 23, 42, 0.6);
+  background: rgba(22, 45, 34, 0.6);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border: 1px solid var(--border);
 }
 
 .glass-dark {
-  background: rgba(2, 6, 23, 0.8);
+  background: rgba(13, 28, 21, 0.8);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-top: 1px solid var(--border);

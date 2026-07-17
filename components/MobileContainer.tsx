@@ -19,7 +19,7 @@ export default function MobileContainer({
             min-h-[100dvh] 
             relative 
             bg-white 
-            shadow-[0_0_50px_rgba(0,0,0,0.5)] 
+            shadow-[0_0_50px_rgba(34,71,53,0.5)]
             flex flex-col
             ${disablePadding ? '' : 'px-4'}
             ${className}

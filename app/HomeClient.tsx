@@ -17,7 +17,7 @@ export default function HomeClient({ featuredItems }: HomeClientProps) {
             <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-12 py-4 bg-background/80 backdrop-blur-md border-b border-white/5">
                 <div className="flex items-center gap-3 cursor-pointer">
                     <div className="relative w-10 h-10 md:w-12 md:h-12">
-                        <Image src="/images/general/logo.png" alt="Bloom Logo" fill className="object-contain" />
+                        <Image src="/images/general/02.png" alt="Bloom Logo" fill className="object-contain" />
                     </div>
                     <span className="font-extrabold text-lg tracking-widest uppercase hidden sm:block text-white">Bloom</span>
                 </div>
@@ -32,19 +32,19 @@ export default function HomeClient({ featuredItems }: HomeClientProps) {
             <section className="relative w-full h-[100dvh] min-h-[600px] flex items-center justify-center pt-16">
                 <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
                     <Image 
-                        src="/images/general/as2d21w5.png"
+                        src="/images/general/01.png"
                         alt="Bloom Interior"
                         fill 
                         priority 
                         className="object-cover scale-[1.05] animate-[pulse_20s_ease-in-out_infinite_alternate]" 
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-black/40" />
-                    <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px]" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
+                    <div className="absolute inset-0 bg-black/8" />
                 </div>
                 
                 <div className="relative z-10 flex flex-col items-center justify-center w-full px-6 max-w-5xl mx-auto text-center animate-fade-in-up">
                     <div className="relative w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 drop-shadow-2xl mb-6">
-                        <Image src="/images/general/logo.png" alt="Bloom Logo" fill className="object-contain" priority />
+                        <Image src="/images/general/02.png" alt="Bloom Logo" fill className="object-contain" priority />
                     </div>
                     <span className="text-accent-main font-bold tracking-[0.2em] uppercase text-sm md:text-base mb-4 drop-shadow-md">
                         {/* TODO: replace with Bloom's own tagline/location */}
@@ -224,7 +224,7 @@ export default function HomeClient({ featuredItems }: HomeClientProps) {
             {/* 4. Footer */}
             <footer className="w-full py-16 px-6 bg-black text-center flex flex-col items-center border-t border-white/10">
                 <div className="relative w-28 h-28 opacity-40 mb-8 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-500 cursor-pointer">
-                    <Image src="/images/general/logo.png" alt="Bloom" fill className="object-contain" />
+                    <Image src="/images/general/02.png" alt="Bloom" fill className="object-contain" />
                 </div>
                 <div className="flex flex-wrap justify-center gap-6 mb-8 text-sm font-medium tracking-widest text-muted-text uppercase">
                     <Link href="/menu" className="hover:text-accent-main transition-colors">Menu</Link>

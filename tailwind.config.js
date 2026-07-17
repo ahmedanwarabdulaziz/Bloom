@@ -7,6 +7,7 @@ module.exports = {
     theme: {
         extend: {
             colors: {
+                black: "#224735",
                 background: "var(--background)",
                 surface: "var(--surface)",
                 "surface-elevated": "var(--surface-elevated)",

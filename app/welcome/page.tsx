@@ -13,12 +13,12 @@ export default async function Welcome() {
             {/* 1. Background Layer - Shiny Black */}
             <div className="absolute inset-0 z-0 bg-black pointer-events-none overflow-hidden">
                 {/* Base Gradient */}
-                <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-black to-black" />
+                <div className="absolute inset-0 bg-gradient-to-br from-background via-black to-black" />
                 {/* Shiny highlights */}
                 <div className="absolute -top-[20%] -left-[10%] w-[60%] h-[60%] rounded-full bg-white/10 blur-[120px]" />
                 <div className="absolute top-[20%] right-[5%] w-[40%] h-[40%] rounded-full bg-accent-main/10 blur-[120px]" />
                 {/* Subtle vignette */}
-                <div className="absolute inset-0 shadow-[inset_0_0_150px_rgba(0,0,0,0.8)]" />
+                <div className="absolute inset-0 shadow-[inset_0_0_150px_rgba(34,71,53,0.8)]" />
             </div>
 
                 {/* 2. Content Layer */}
