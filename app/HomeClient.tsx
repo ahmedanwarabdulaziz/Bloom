@@ -234,13 +234,18 @@ export default function HomeClient({ featuredItems }: HomeClientProps) {
                     <span className="text-white/20 hidden sm:inline">|</span>
                     <Link href="#" className="hover:text-accent-main transition-colors">Contact</Link>
                 </div>
-                {/* Social Links — TODO: replace with Bloom's own social URLs */}
+                {/* Social Links */}
                 <div className="flex gap-4 mb-8">
-                    <a href="#" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-accent-main hover:text-black hover:scale-110 transition-all duration-300">
+                    <a href="https://www.instagram.com/thebloomcoffee.hamilton/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-accent-main hover:text-black hover:scale-110 transition-all duration-300">
                         <Instagram fontSize="small" />
                     </a>
-                    <a href="#" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-accent-main hover:text-black hover:scale-110 transition-all duration-300">
+                    <a href="https://www.facebook.com/profile.php?id=61563446374553" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-accent-main hover:text-black hover:scale-110 transition-all duration-300">
                         <Facebook fontSize="small" />
+                    </a>
+                    <a href="https://www.tiktok.com/@the.bloom.coffee0" target="_blank" rel="noopener noreferrer" aria-label="TikTok" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-accent-main hover:text-black hover:scale-110 transition-all duration-300">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M16.6 5.82s.51.5 0 0A4.278 4.278 0 0 1 15.54 3h-3.09v12.4a2.592 2.592 0 0 1-2.59 2.5c-1.42 0-2.6-1.16-2.6-2.6 0-1.72 1.66-3.01 3.37-2.48V9.66c-3.45-.46-6.47 2.22-6.47 5.64 0 3.33 2.76 5.7 5.69 5.7 3.14 0 5.69-2.55 5.69-5.7V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3s-1.88.09-3.24-1.48Z" />
+                        </svg>
                     </a>
                 </div>
                 <p className="text-muted-text/80 text-sm tracking-widest uppercase mb-4">

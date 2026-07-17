@@ -9,13 +9,25 @@ const jakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
+    metadataBase: new URL("https://www.bloomhamilton.com"),
     title: "Bloom | Restaurant & Coffee Shop",
     description: "Experience the finest food and drinks at Bloom. A premium restaurant and coffee shop.",
     manifest: "/manifest.json",
+    openGraph: {
+        title: "Bloom | Restaurant & Coffee Shop",
+        description: "Experience the finest food and drinks at Bloom. A premium restaurant and coffee shop.",
+        siteName: "Bloom",
+        type: "website",
+    },
+    twitter: {
+        card: "summary_large_image",
+        title: "Bloom | Restaurant & Coffee Shop",
+        description: "Experience the finest food and drinks at Bloom. A premium restaurant and coffee shop.",
+    },
 };
 
 export const viewport: Viewport = {
-    themeColor: "#121212",
+    themeColor: "#224735",
 };
 
 export default function RootLayout({
