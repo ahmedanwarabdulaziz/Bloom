@@ -229,10 +229,9 @@ export default function HomeClient({ featuredItems }: HomeClientProps) {
                 <div className="flex flex-wrap justify-center gap-6 mb-8 text-sm font-medium tracking-widest text-muted-text uppercase">
                     <Link href="/menu" className="hover:text-accent-main transition-colors">Menu</Link>
                     <span className="text-white/20 hidden sm:inline">|</span>
-                    {/* TODO: replace with Bloom's Google Maps link */}
-                    <a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-accent-main transition-colors">Location</a>
+                    <a href="https://maps.app.goo.gl/tGhvUgKMeZjfW97z9" target="_blank" rel="noopener noreferrer" className="hover:text-accent-main transition-colors">Location</a>
                     <span className="text-white/20 hidden sm:inline">|</span>
-                    <Link href="#" className="hover:text-accent-main transition-colors">Contact</Link>
+                    <a href="tel:+16476556340" className="hover:text-accent-main transition-colors">Contact</a>
                 </div>
                 {/* Social Links */}
                 <div className="flex gap-4 mb-8">
@@ -248,10 +247,21 @@ export default function HomeClient({ featuredItems }: HomeClientProps) {
                         </svg>
                     </a>
                 </div>
-                <p className="text-muted-text/80 text-sm tracking-widest uppercase mb-4">
-                    {/* TODO: replace with Bloom's address */}
-                    Address placeholder
-                </p>
+                <a
+                    href="https://maps.app.goo.gl/tGhvUgKMeZjfW97z9"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-muted-text/80 text-sm tracking-widest uppercase mb-2 hover:text-accent-main transition-colors"
+                >
+                    533 Concession St, Hamilton, ON L8V 1A7
+                </a>
+                <a href="tel:+16476556340" className="text-muted-text/80 text-sm tracking-widest mb-4 hover:text-accent-main transition-colors">
+                    +1 (647) 655-6340
+                </a>
+                <div className="flex flex-col items-center gap-0.5 text-muted-text/60 text-xs tracking-wider mb-6">
+                    <span>Fri &amp; Sat: 9 AM &ndash; 11:30 PM</span>
+                    <span>Sun &ndash; Thu: 9 AM &ndash; 10 PM</span>
+                </div>
                 <p className="text-muted-text/50 text-xs tracking-wider">
                     &copy; {new Date().getFullYear()} BLOOM. ALL RIGHTS RESERVED.
                 </p>

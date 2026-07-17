@@ -40,7 +40,30 @@ export default function RootLayout({
         '@type': 'Restaurant',
         name: 'Bloom',
         description: 'Experience the finest food and drinks at Bloom. A premium restaurant and coffee shop.',
-        hasMenu: '/menu'
+        hasMenu: '/menu',
+        telephone: '+1-647-655-6340',
+        address: {
+            '@type': 'PostalAddress',
+            streetAddress: '533 Concession St',
+            addressLocality: 'Hamilton',
+            addressRegion: 'ON',
+            postalCode: 'L8V 1A7',
+            addressCountry: 'CA'
+        },
+        openingHoursSpecification: [
+            {
+                '@type': 'OpeningHoursSpecification',
+                dayOfWeek: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday'],
+                opens: '09:00',
+                closes: '22:00'
+            },
+            {
+                '@type': 'OpeningHoursSpecification',
+                dayOfWeek: ['Friday', 'Saturday'],
+                opens: '09:00',
+                closes: '23:30'
+            }
+        ]
     };
 
     return (
