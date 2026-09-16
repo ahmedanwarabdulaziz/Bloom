@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
+import ClarityAnalytics from "../components/ClarityAnalytics";
 
 const jakarta = Plus_Jakarta_Sans({
     subsets: ["latin"],
@@ -74,7 +75,10 @@ export default function RootLayout({
                     dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
                 />
             </head>
-            <body className="antialiased font-sans text-main-text bg-background">{children}</body>
+            <body className="antialiased font-sans text-main-text bg-background">
+                {children}
+                <ClarityAnalytics />
+            </body>
         </html>
     );
 }
