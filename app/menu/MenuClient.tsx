@@ -41,7 +41,13 @@ interface MenuClientProps {
     items: MenuItem[];
 }
 
-const ExpandableDescription = ({ text }: { text: string }) => {
+const R2_DOMAIN = process.env.NEXT_PUBLIC_R2_DOMAIN || "https://pub-03f42476f4324996812e6d8a983be0f0.r2.dev";
+
+// Older uploads stored only the R2 key (e.g. "menu-items/x.webp") instead of a full URL.
+const resolveImageUrl = (src: string) =>
+    /^https?:\/\//.test(src) ? src : `${R2_DOMAIN}/${src.replace(/^\/+/, "")}`;
+
+const ExpandableDescription =({ text }: { text: string }) => {
     const [isExpanded, setIsExpanded] = useState(false);
     const [isTruncated, setIsTruncated] = useState(false);
     const textRef = useRef<HTMLParagraphElement>(null);
@@ -132,7 +138,7 @@ export default function MenuClient({ categories, items }: MenuClientProps) {
                 <div className="h-24 w-24 shrink-0 rounded-control overflow-hidden relative bg-surface-elevated">
                     {item.squareImage ? (
                         <Image
-                            src={item.squareImage}
+                            src={resolveImageUrl(item.squareImage)}
                             alt={item.name}
                             fill
                             sizes="96px"
