@@ -83,3 +83,72 @@ export async function saveHomepageSettings(formData: FormData) {
     revalidatePath('/admin/settings');
     revalidatePath('/');
 }
+
+export interface LoyaltySettings {
+    popupEnabled: boolean;
+    pointsButtonEnabled: boolean;
+    squareLink: string;
+    title: string;
+    description: string;
+    joinButtonText: string;
+    skipButtonText: string;
+    pointsButtonText: string;
+    image?: string;
+}
+
+const LOYALTY_DOC_PATH = 'settings/loyalty';
+
+const DEFAULT_LOYALTY_SETTINGS: LoyaltySettings = {
+    popupEnabled: false,
+    pointsButtonEnabled: false,
+    squareLink: 'https://app.squareup.com/loyalty/MLQYCAYRKH8H8',
+    title: 'Earn Points Every Visit',
+    description: 'Join Bloom Rewards for free and collect points on every order. Redeem them for free treats!',
+    joinButtonText: 'Join & Earn Points',
+    skipButtonText: 'Maybe later',
+    pointsButtonText: 'My Points',
+    image: '',
+};
+
+export async function getLoyaltySettings(): Promise<LoyaltySettings> {
+    try {
+        const doc = await adminDb.doc(LOYALTY_DOC_PATH).get();
+        return { ...DEFAULT_LOYALTY_SETTINGS, ...(doc.exists ? doc.data() : {}) };
+    } catch (error) {
+        console.error("Failed to load loyalty settings:", error);
+        return DEFAULT_LOYALTY_SETTINGS;
+    }
+}
+
+export async function saveLoyaltySettings(formData: FormData) {
+    const imageFile = formData.get('loyaltyImageFile') as File | null;
+    let image = formData.get('existingLoyaltyImage') as string || '';
+
+    if (imageFile && imageFile.size > 0) {
+        try {
+            image = await uploadFileToR2(imageFile, 'settings/loyalty');
+        } catch (error) {
+            console.error("Failed to upload loyalty image:", error);
+        }
+    }
+
+    const text = (key: keyof LoyaltySettings) =>
+        (formData.get(key) as string || '').trim() || (DEFAULT_LOYALTY_SETTINGS[key] as string);
+
+    const data: LoyaltySettings = {
+        popupEnabled: formData.get('popupEnabled') === 'true',
+        pointsButtonEnabled: formData.get('pointsButtonEnabled') === 'true',
+        squareLink: text('squareLink'),
+        title: text('title'),
+        description: text('description'),
+        joinButtonText: text('joinButtonText'),
+        skipButtonText: text('skipButtonText'),
+        pointsButtonText: text('pointsButtonText'),
+        image,
+    };
+
+    await adminDb.doc(LOYALTY_DOC_PATH).set(data, { merge: true });
+
+    revalidatePath('/admin/settings');
+    revalidatePath('/menu');
+}

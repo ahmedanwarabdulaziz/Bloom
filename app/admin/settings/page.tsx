@@ -4,17 +4,20 @@ import { useState, useEffect } from 'react';
 import { Typography, Box, Button, CircularProgress, Paper, Divider, TextField } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
 import FileUpload from '../../../components/FileUpload';
-import { getHomepageSettings, saveHomepageSettings, HomepageSettings } from './actions';
+import LoyaltySettingsForm from '../../../components/LoyaltySettingsForm';
+import { getHomepageSettings, saveHomepageSettings, HomepageSettings, getLoyaltySettings, LoyaltySettings } from './actions';
 
 export default function SettingsPage() {
     const [settings, setSettings] = useState<HomepageSettings | null>(null);
+    const [loyalty, setLoyalty] = useState<LoyaltySettings | null>(null);
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
 
     useEffect(() => {
         async function fetchSettings() {
-            const data = await getHomepageSettings();
+            const [data, loyaltyData] = await Promise.all([getHomepageSettings(), getLoyaltySettings()]);
             setSettings(data || { topAdImage: '', middleAdImage: '', bottomAdImage: '' });
+            setLoyalty(loyaltyData);
             setLoading(false);
         }
         fetchSettings();
@@ -155,6 +158,8 @@ export default function SettingsPage() {
                     </Box>
                 </form>
             </Paper>
+
+            {loyalty && <LoyaltySettingsForm initial={loyalty} />}
         </Box>
     );
 }

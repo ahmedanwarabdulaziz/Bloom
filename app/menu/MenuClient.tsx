@@ -5,6 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowBack, Search, Clear, Restaurant } from "@mui/icons-material";
 import { motion, AnimatePresence } from "framer-motion";
+import LoyaltyPopup from "@/components/LoyaltyPopup";
+import type { LoyaltySettings } from "../admin/settings/actions";
 
 interface Category {
     id: string;
@@ -39,6 +41,7 @@ interface MenuItem {
 interface MenuClientProps {
     categories: Category[];
     items: MenuItem[];
+    loyalty: LoyaltySettings;
 }
 
 const R2_DOMAIN = process.env.NEXT_PUBLIC_R2_DOMAIN || "https://pub-03f42476f4324996812e6d8a983be0f0.r2.dev";
@@ -97,7 +100,7 @@ const ExpandableDescription =({ text }: { text: string }) => {
     );
 };
 
-export default function MenuClient({ categories, items }: MenuClientProps) {
+export default function MenuClient({ categories, items, loyalty }: MenuClientProps) {
     const [activeMainCategory, setActiveMainCategory] = useState<'food' | 'drinks'>('food');
     const [activeCategory, setActiveCategory] = useState<string>("ALL");
     const [searchTerm, setSearchTerm] = useState("");
@@ -427,6 +430,7 @@ export default function MenuClient({ categories, items }: MenuClientProps) {
                     </div>
                 </div>
 
+                <LoyaltyPopup settings={loyalty} />
         </main>
     );
 }
