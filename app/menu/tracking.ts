@@ -2,6 +2,7 @@
 
 import { adminDb } from '@/lib/firebase-admin';
 import { FieldValue } from 'firebase-admin/firestore';
+import { notifyAll } from '@/lib/telegram';
 
 // Daily counters live in analytics_daily/{YYYY-MM-DD} (Toronto time).
 export type LoyaltyEvent = 'menu_open' | 'popup_shown' | 'popup_join' | 'popup_skip' | 'points_click';
@@ -22,7 +23,20 @@ export async function trackLoyaltyEvent(event: LoyaltyEvent, firstVisitToday = f
     }
 
     try {
-        await adminDb.collection('analytics_daily').doc(day).set(update, { merge: true });
+        const ref = adminDb.collection('analytics_daily').doc(day);
+        await ref.set(update, { merge: true });
+
+        if (event === 'popup_join' || event === 'popup_skip') {
+            const today = (await ref.get()).data() || {};
+            const time = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Toronto', hour: 'numeric', minute: '2-digit' }).format(new Date());
+            const headline = event === 'popup_join'
+                ? '✅ <b>A customer tapped Join</b>'
+                : '❌ <b>A customer skipped the popup</b>';
+            await notifyAll(
+                `${headline} at ${time}\n` +
+                `Today: ${today.popup_join || 0} joins · ${today.popup_skip || 0} skips · ${today.menu_open || 0} menu opens`
+            );
+        }
     } catch (error) {
         console.error("Failed to track loyalty event:", error);
     }
