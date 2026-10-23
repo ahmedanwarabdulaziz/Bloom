@@ -10,6 +10,7 @@ import { trackLoyaltyEvent, LoyaltyEvent } from "../app/menu/tracking";
 
 const POPUP_DELAY_MS = 1500;
 const SQUARE_RENDER_DELAY_MS = 2000;
+const NFC_SOURCE = "nfc";
 const KEY_LAST_VISIT = "bloom_last_visit_day";
 const KEY_POPUP_SHOWN = "bloom_loyalty_popup_day";
 const KEY_JOINED = "bloom_loyalty_joined";
@@ -43,9 +44,17 @@ export default function LoyaltyPopup({ settings }: { settings: LoyaltySettings }
 
     useEffect(() => {
         const day = today();
-        const firstVisitToday = storageGet(KEY_LAST_VISIT) !== day;
-        storageSet(KEY_LAST_VISIT, day);
-        track("menu_open", firstVisitToday);
+
+        // Only visits from the NFC tag link (/menu?src=nfc) count as menu opens.
+        const url = new URL(window.location.href);
+        if (url.searchParams.get("src") === NFC_SOURCE) {
+            const firstVisitToday = storageGet(KEY_LAST_VISIT) !== day;
+            storageSet(KEY_LAST_VISIT, day);
+            track("menu_open", firstVisitToday);
+            // Drop the tag so refreshes and shared links don't count as scans.
+            url.searchParams.delete("src");
+            window.history.replaceState(window.history.state, "", url.pathname + url.search + url.hash);
+        }
 
         if (!settings.popupEnabled || !settings.squareLink) return;
         if (storageGet(KEY_JOINED) || storageGet(KEY_POPUP_SHOWN) === day) return;

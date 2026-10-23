@@ -1,13 +1,23 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { adminDb } from '@/lib/firebase-admin';
 import { getLoyaltyStats } from '@/app/admin/dashboard/actions';
+import { getLoyaltySettings } from '@/app/admin/settings/actions';
 import {
-    allowedChatIds, formatReport, rangeKeyboard, reportKeyboard,
-    REPORT_BUTTON, sendTelegramMessage, telegramCall,
+    allowedChatIds, formatReport, rangeKeyboard, reportKeyboard, settingsMessage,
+    REPORT_BUTTON, SETTINGS_BUTTON, sendTelegramMessage, telegramCall,
 } from '@/lib/telegram';
 
 export const dynamic = 'force-dynamic';
 
-// Telegram webhook: replies to the Report button and range choices for allowed chats only.
+const TOGGLES = ['popupEnabled', 'pointsButtonEnabled'] as const;
+
+async function sendSettings(chatId: number) {
+    const settings = await getLoyaltySettings();
+    const { text, keyboard } = settingsMessage(settings.popupEnabled, settings.pointsButtonEnabled);
+    await sendTelegramMessage(chatId, text, keyboard);
+}
+
+// Telegram webhook: reports, stats ranges and on/off toggles, for allowed chats only.
 export async function POST(req: NextRequest) {
     const secret = process.env.TELEGRAM_WEBHOOK_SECRET;
     if (!secret || req.headers.get('x-telegram-bot-api-secret-token') !== secret) {
@@ -20,12 +30,42 @@ export async function POST(req: NextRequest) {
     if (update.callback_query) {
         const query = update.callback_query;
         const chatId: number | undefined = query.message?.chat?.id;
-        await telegramCall('answerCallbackQuery', { callback_query_id: query.id });
+        const data = String(query.data || '');
 
-        const days = Number(String(query.data || '').replace('report:', ''));
-        if (chatId && allowed.includes(chatId) && [1, 7, 30].includes(days)) {
-            const stats = await getLoyaltyStats(days);
-            await sendTelegramMessage(chatId, formatReport(stats, days), rangeKeyboard);
+        if (!chatId || !allowed.includes(chatId)) {
+            await telegramCall('answerCallbackQuery', { callback_query_id: query.id });
+            return NextResponse.json({ ok: true });
+        }
+
+        if (data.startsWith('report:')) {
+            await telegramCall('answerCallbackQuery', { callback_query_id: query.id });
+            const days = Number(data.replace('report:', ''));
+            if ([1, 7, 30].includes(days)) {
+                const stats = await getLoyaltyStats(days);
+                await sendTelegramMessage(chatId, formatReport(stats, days), rangeKeyboard);
+            }
+        } else if (data.startsWith('toggle:')) {
+            const key = data.replace('toggle:', '') as typeof TOGGLES[number];
+            if (TOGGLES.includes(key)) {
+                const current = await getLoyaltySettings();
+                const updated = { ...current, [key]: !current[key] };
+                await adminDb.doc('settings/loyalty').set({ [key]: updated[key] }, { merge: true });
+
+                const label = key === 'popupEnabled' ? 'Popup' : 'My Points button';
+                await telegramCall('answerCallbackQuery', {
+                    callback_query_id: query.id,
+                    text: `${label} is now ${updated[key] ? 'ON' : 'OFF'}`,
+                });
+                // Refresh the same settings message in place.
+                const { text, keyboard } = settingsMessage(updated.popupEnabled, updated.pointsButtonEnabled);
+                await telegramCall('editMessageText', {
+                    chat_id: chatId,
+                    message_id: query.message.message_id,
+                    text,
+                    parse_mode: 'HTML',
+                    reply_markup: keyboard,
+                });
+            }
         }
         return NextResponse.json({ ok: true });
     }
@@ -42,10 +82,12 @@ export async function POST(req: NextRequest) {
     const text: string = message.text || '';
     if (text === REPORT_BUTTON || text.startsWith('/report')) {
         await sendTelegramMessage(chatId, 'Which period?', rangeKeyboard);
+    } else if (text === SETTINGS_BUTTON || text.startsWith('/settings')) {
+        await sendSettings(chatId);
     } else {
         await sendTelegramMessage(
             chatId,
-            '👋 Bloom Loyalty bot is active.\nYou will get an alert every time a customer taps Join or skips the popup.\nTap <b>📊 Report</b> any time for stats.',
+            '👋 Bloom Loyalty bot is active.\nYou will get an alert every time a customer taps Join or skips the popup.\nTap <b>📊 Report</b> for stats or <b>⚙️ Settings</b> to switch the popup and My Points button on or off.',
             reportKeyboard
         );
     }

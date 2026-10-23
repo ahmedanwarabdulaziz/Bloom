@@ -61,7 +61,7 @@ export default function AdminDashboard() {
                 <>
                     <Typography variant="h6" gutterBottom>Menu & Loyalty</Typography>
                     <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, mb: 4 }}>
-                        <StatCard label="Menu opens" value={total('menu_open')} sub={`${total('menu_open_unique')} unique phones (per day)`} />
+                        <StatCard label="NFC scans" value={total('menu_open')} sub={`${total('menu_open_unique')} unique phones (per day)`} />
                         <StatCard label="Popup shown" value={shown} />
                         <StatCard label="Tapped Join" value={joined} sub={`${pct(joined, shown)} of popups shown`} />
                         <StatCard label="Skipped" value={skipped} sub={`${pct(skipped, shown)} of popups shown`} />
@@ -79,7 +79,7 @@ export default function AdminDashboard() {
                                 <TableHead>
                                     <TableRow>
                                         <TableCell>Date</TableCell>
-                                        <TableCell align="right">Menu opens</TableCell>
+                                        <TableCell align="right">NFC scans</TableCell>
                                         <TableCell align="right">Unique</TableCell>
                                         <TableCell align="right">Popup shown</TableCell>
                                         <TableCell align="right">Joined</TableCell>

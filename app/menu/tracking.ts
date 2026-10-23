@@ -34,7 +34,7 @@ export async function trackLoyaltyEvent(event: LoyaltyEvent, firstVisitToday = f
                 : '❌ <b>A customer skipped the popup</b>';
             await notifyAll(
                 `${headline} at ${time}\n` +
-                `Today: ${today.popup_join || 0} joins · ${today.popup_skip || 0} skips · ${today.menu_open || 0} menu opens`
+                `Today: ${today.popup_join || 0} joins · ${today.popup_skip || 0} skips · ${today.menu_open || 0} NFC scans`
             );
         }
     } catch (error) {
