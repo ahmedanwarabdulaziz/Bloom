@@ -26,19 +26,12 @@ export async function trackLoyaltyEvent(event: LoyaltyEvent, firstVisitToday = f
         const ref = adminDb.collection('analytics_daily').doc(day);
         await ref.set(update, { merge: true });
 
-        // menu_open is only tracked for NFC tag visits, so each one is a scan.
-        const headlines: Partial<Record<LoyaltyEvent, string>> = {
-            menu_open: firstVisitToday
-                ? '📲 <b>NFC scan: new phone today</b>'
-                : '📲 <b>NFC scan: same phone again today</b>',
-            popup_join: '✅ <b>A customer tapped Join</b>',
-            popup_skip: '❌ <b>A customer skipped the popup</b>',
-        };
-        const headline = headlines[event];
-
-        if (headline) {
+        if (event === 'popup_join' || event === 'popup_skip') {
             const today = (await ref.get()).data() || {};
             const time = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Toronto', hour: 'numeric', minute: '2-digit' }).format(new Date());
+            const headline = event === 'popup_join'
+                ? '✅ <b>A customer tapped Join</b>'
+                : '❌ <b>A customer skipped the popup</b>';
             await notifyAll(
                 `${headline} at ${time}\n` +
                 `Today: ${today.popup_join || 0} joins · ${today.popup_skip || 0} skips · ${today.menu_open || 0} NFC scans`

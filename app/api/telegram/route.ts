@@ -87,7 +87,7 @@ export async function POST(req: NextRequest) {
     } else {
         await sendTelegramMessage(
             chatId,
-            '👋 Bloom Loyalty bot is active.\nYou will get an alert for every NFC scan and every time a customer taps Join or skips the popup.\nTap <b>📊 Report</b> for stats or <b>⚙️ Settings</b> to switch the popup and My Points button on or off.',
+            '👋 Bloom Loyalty bot is active.\nYou will get an alert every time a customer taps Join or skips the popup.\nTap <b>📊 Report</b> for stats or <b>⚙️ Settings</b> to switch the popup and My Points button on or off.',
             reportKeyboard
         );
     }
