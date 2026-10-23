@@ -9,6 +9,7 @@ import type { LoyaltySettings } from "../app/admin/settings/actions";
 import { trackLoyaltyEvent, LoyaltyEvent } from "../app/menu/tracking";
 
 const POPUP_DELAY_MS = 1500;
+const SQUARE_RENDER_DELAY_MS = 2000;
 const KEY_LAST_VISIT = "bloom_last_visit_day";
 const KEY_POPUP_SHOWN = "bloom_loyalty_popup_day";
 const KEY_JOINED = "bloom_loyalty_joined";
@@ -119,18 +120,19 @@ export default function LoyaltyPopup({ settings }: { settings: LoyaltySettings }
                             </a>
                         </div>
                         <div className="relative flex-1 w-full bg-white">
+                            <iframe
+                                src={settings.squareLink}
+                                title="Bloom Rewards"
+                                // Square's page fires load before its app has drawn anything, so keep the spinner a bit longer.
+                                onLoad={() => setTimeout(() => setSquareLoading(false), SQUARE_RENDER_DELAY_MS)}
+                                className="absolute inset-0 w-full h-full border-0"
+                            />
                             {squareLoading && (
-                                <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 text-gray-500 text-sm">
+                                <div className="absolute inset-0 z-10 bg-white flex flex-col items-center justify-center gap-3 text-gray-500 text-sm">
                                     <div className="h-8 w-8 rounded-full border-2 border-gray-300 border-t-[#224735] animate-spin" />
                                     Loading Bloom Rewards...
                                 </div>
                             )}
-                            <iframe
-                                src={settings.squareLink}
-                                title="Bloom Rewards"
-                                onLoad={() => setSquareLoading(false)}
-                                className="absolute inset-0 w-full h-full border-0"
-                            />
                         </div>
                     </motion.div>
                 )}
