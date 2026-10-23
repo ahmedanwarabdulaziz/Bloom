@@ -66,6 +66,7 @@ export default function AdminDashboard() {
                         <StatCard label="Tapped Join" value={joined} sub={`${pct(joined, shown)} of popups shown`} />
                         <StatCard label="Skipped" value={skipped} sub={`${pct(skipped, shown)} of popups shown`} />
                         <StatCard label="My Points taps" value={total('points_click')} />
+                        <StatCard label="Welcome-back popups" value={total('welcome_shown')} sub="Shown to phones that tapped Join before" />
                     </Box>
 
                     <Typography variant="body2" color="text.secondary" mb={2}>

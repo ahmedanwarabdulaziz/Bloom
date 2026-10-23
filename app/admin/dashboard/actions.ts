@@ -10,6 +10,7 @@ export interface DailyStats {
     popup_join: number;
     popup_skip: number;
     points_click: number;
+    welcome_shown: number;
 }
 
 export async function getLoyaltyStats(days: number): Promise<DailyStats[]> {
@@ -32,6 +33,7 @@ export async function getLoyaltyStats(days: number): Promise<DailyStats[]> {
             popup_join: d.popup_join || 0,
             popup_skip: d.popup_skip || 0,
             points_click: d.points_click || 0,
+            welcome_shown: d.welcome_shown || 0,
         };
     });
 }

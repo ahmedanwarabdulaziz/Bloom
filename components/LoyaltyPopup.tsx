@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Close, Stars } from "@mui/icons-material";
 import { motion, AnimatePresence } from "framer-motion";
@@ -11,7 +11,6 @@ import { trackLoyaltyEvent, LoyaltyEvent } from "../app/menu/tracking";
 const POPUP_DELAY_MS = 1500;
 const NFC_SOURCE = "nfc";
 const KEY_LAST_VISIT = "bloom_last_visit_day";
-const KEY_POPUP_SHOWN = "bloom_loyalty_popup_day";
 const KEY_JOINED = "bloom_loyalty_joined";
 
 const R2_DOMAIN = process.env.NEXT_PUBLIC_R2_DOMAIN || "https://pub-03f42476f4324996812e6d8a983be0f0.r2.dev";
@@ -35,44 +34,69 @@ const track = (event: LoyaltyEvent, firstVisitToday = false) => {
     try { Clarity.event(event); } catch { /* Clarity not ready */ }
 };
 
+// "signup" for phones that never tapped Join, "welcome" for phones that did.
+type PopupMode = "signup" | "welcome";
+
 export default function LoyaltyPopup({ settings }: { settings: LoyaltySettings }) {
-    const [open, setOpen] = useState(false);
+    const [mode, setMode] = useState<PopupMode | null>(null);
+
+    // Remembered across effect re-runs, because the first run strips ?src=nfc from the URL.
+    const isNfcScan = useRef<boolean | null>(null);
 
     useEffect(() => {
-        const day = today();
-
-        // Only visits from the NFC tag link (/menu?src=nfc) count as menu opens.
-        const url = new URL(window.location.href);
-        if (url.searchParams.get("src") === NFC_SOURCE) {
-            const firstVisitToday = storageGet(KEY_LAST_VISIT) !== day;
-            storageSet(KEY_LAST_VISIT, day);
-            track("menu_open", firstVisitToday);
-            // Drop the tag so refreshes and shared links don't count as scans.
-            url.searchParams.delete("src");
-            window.history.replaceState(window.history.state, "", url.pathname + url.search + url.hash);
+        // Popups and menu-open counts only happen on NFC tag visits (/menu?src=nfc).
+        if (isNfcScan.current === null) {
+            const url = new URL(window.location.href);
+            isNfcScan.current = url.searchParams.get("src") === NFC_SOURCE;
+            if (isNfcScan.current) {
+                const day = today();
+                const firstVisitToday = storageGet(KEY_LAST_VISIT) !== day;
+                storageSet(KEY_LAST_VISIT, day);
+                track("menu_open", firstVisitToday);
+                // Drop the tag so refreshes and shared links don't count as scans or reopen the popup.
+                url.searchParams.delete("src");
+                window.history.replaceState(window.history.state, "", url.pathname + url.search + url.hash);
+            }
         }
 
-        if (!settings.popupEnabled || !settings.squareLink) return;
-        if (storageGet(KEY_JOINED) || storageGet(KEY_POPUP_SHOWN) === day) return;
+        if (!isNfcScan.current || !settings.popupEnabled || !settings.squareLink) return;
 
+        const nextMode: PopupMode = storageGet(KEY_JOINED) ? "welcome" : "signup";
         const timer = setTimeout(() => {
-            setOpen(true);
-            storageSet(KEY_POPUP_SHOWN, day);
-            track("popup_shown");
+            setMode(nextMode);
+            track(nextMode === "signup" ? "popup_shown" : "welcome_shown");
         }, POPUP_DELAY_MS);
         return () => clearTimeout(timer);
     }, [settings.popupEnabled, settings.squareLink]);
 
-    const handleJoin = () => {
-        track("popup_join");
-        storageSet(KEY_JOINED, "1");
-        setOpen(false);
+    const handlePrimary = () => {
+        if (mode === "signup") {
+            track("popup_join");
+            storageSet(KEY_JOINED, "1");
+        } else {
+            track("points_click");
+        }
+        setMode(null);
     };
 
-    const handleSkip = () => {
-        track("popup_skip");
-        setOpen(false);
+    const handleDismiss = () => {
+        if (mode === "signup") track("popup_skip");
+        setMode(null);
     };
+
+    const content = mode === "welcome"
+        ? {
+            title: settings.welcomeTitle,
+            description: settings.welcomeDescription,
+            primary: settings.welcomeButtonText,
+            dismiss: "Back to menu",
+        }
+        : {
+            title: settings.title,
+            description: settings.description,
+            primary: settings.joinButtonText,
+            dismiss: settings.skipButtonText,
+        };
 
     return (
         <>
@@ -92,13 +116,13 @@ export default function LoyaltyPopup({ settings }: { settings: LoyaltySettings }
             )}
 
             <AnimatePresence>
-                {open && (
+                {mode && (
                     <motion.div
                         key="loyalty-backdrop"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        onClick={handleSkip}
+                        onClick={handleDismiss}
                         className="fixed inset-0 z-[100] bg-black/70 backdrop-blur-sm flex items-center justify-center px-4"
                     >
                         <motion.div
@@ -113,14 +137,14 @@ export default function LoyaltyPopup({ settings }: { settings: LoyaltySettings }
                             className="relative w-full max-w-sm bg-surface border border-border rounded-card shadow-2xl overflow-hidden"
                         >
                             <button
-                                onClick={handleSkip}
+                                onClick={handleDismiss}
                                 aria-label="Close"
                                 className="absolute top-3 right-3 z-10 h-8 w-8 rounded-full bg-background/70 border border-border flex items-center justify-center text-main-text active:scale-95"
                             >
                                 <Close fontSize="small" />
                             </button>
 
-                            {settings.image ? (
+                            {mode === "signup" && settings.image ? (
                                 <div className="relative w-full aspect-[16/9] bg-surface-elevated">
                                     <Image src={resolveImageUrl(settings.image)} alt="" fill sizes="384px" className="object-cover" />
                                 </div>
@@ -132,26 +156,26 @@ export default function LoyaltyPopup({ settings }: { settings: LoyaltySettings }
 
                             <div className="p-6 text-center">
                                 <h2 id="loyalty-title" className="text-main-text font-bold text-2xl leading-tight">
-                                    {settings.title}
+                                    {content.title}
                                 </h2>
                                 <p className="text-muted-text text-sm mt-3 leading-relaxed whitespace-pre-line">
-                                    {settings.description}
+                                    {content.description}
                                 </p>
 
                                 <a
                                     href={settings.squareLink}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    onClick={handleJoin}
+                                    onClick={handlePrimary}
                                     className="mt-6 block w-full bg-accent-main hover:bg-accent-main-hover text-background font-bold py-3 rounded-full shadow-md active:scale-95 transition-all"
                                 >
-                                    {settings.joinButtonText}
+                                    {content.primary}
                                 </a>
                                 <button
-                                    onClick={handleSkip}
+                                    onClick={handleDismiss}
                                     className="mt-3 w-full text-muted-text text-sm py-2 hover:text-main-text transition-colors"
                                 >
-                                    {settings.skipButtonText}
+                                    {content.dismiss}
                                 </button>
                             </div>
                         </motion.div>

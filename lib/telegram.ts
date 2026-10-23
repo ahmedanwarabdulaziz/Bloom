@@ -82,9 +82,10 @@ export function formatReport(stats: DailyStats[], days: number): string {
         `📊 <b>Bloom Report: ${label}</b>`,
         '',
         `📲 NFC scans: <b>${sum('menu_open')}</b> (${sum('menu_open_unique')} unique phones)`,
-        `🪧 Popup shown: <b>${shown}</b>`,
+        `🪧 Sign-up popup shown: <b>${shown}</b>`,
         `✅ Tapped Join: <b>${joined}</b> (${pct(joined, shown)})`,
         `❌ Skipped: <b>${skipped}</b> (${pct(skipped, shown)})`,
         `⭐ My Points taps: <b>${sum('points_click')}</b>`,
+        `👋 Welcome-back popups: <b>${sum('welcome_shown')}</b>`,
     ].join('\n');
 }

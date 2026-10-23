@@ -5,9 +5,9 @@ import { FieldValue } from 'firebase-admin/firestore';
 import { notifyAll } from '@/lib/telegram';
 
 // Daily counters live in analytics_daily/{YYYY-MM-DD} (Toronto time).
-export type LoyaltyEvent = 'menu_open' | 'popup_shown' | 'popup_join' | 'popup_skip' | 'points_click';
+export type LoyaltyEvent = 'menu_open' | 'popup_shown' | 'popup_join' | 'popup_skip' | 'points_click' | 'welcome_shown';
 
-const ALLOWED_EVENTS: LoyaltyEvent[] = ['menu_open', 'popup_shown', 'popup_join', 'popup_skip', 'points_click'];
+const ALLOWED_EVENTS: LoyaltyEvent[] = ['menu_open', 'popup_shown', 'popup_join', 'popup_skip', 'points_click', 'welcome_shown'];
 
 export async function trackLoyaltyEvent(event: LoyaltyEvent, firstVisitToday = false) {
     // Server actions are public endpoints, so only accept known event names.

@@ -34,14 +34,14 @@ export default function LoyaltySettingsForm({ initial }: { initial: LoyaltySetti
             <form onSubmit={handleSubmit}>
                 <Typography variant="h6" gutterBottom>Square Loyalty</Typography>
                 <Typography color="text.secondary" variant="body2" mb={3}>
-                    Show a sign-up popup when customers open the menu, and a button to check their points.
-                    The popup shows at most once per day per phone, and never again after the customer taps Join.
+                    A popup shows on every NFC tag scan. Phones that never tapped Join see the sign-up popup;
+                    phones that already tapped Join see the welcome-back popup instead.
                 </Typography>
 
                 <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 3, mb: 3 }}>
                     <FormControlLabel
                         control={<Switch checked={popupEnabled} onChange={(e) => setPopupEnabled(e.target.checked)} />}
-                        label="Show sign-up popup on menu"
+                        label="Show popups on NFC scan"
                     />
                     <FormControlLabel
                         control={<Switch checked={pointsButtonEnabled} onChange={(e) => setPointsButtonEnabled(e.target.checked)} />}
@@ -69,6 +69,11 @@ export default function LoyaltySettingsForm({ initial }: { initial: LoyaltySetti
                             <TextField sx={{ flex: '1 1 150px' }} label="Skip Button Text" name="skipButtonText" defaultValue={settings.skipButtonText} />
                             <TextField sx={{ flex: '1 1 150px' }} label="Points Button Text" name="pointsButtonText" defaultValue={settings.pointsButtonText} />
                         </Box>
+
+                        <Typography variant="subtitle2" sx={{ mt: 2 }}>Welcome-back popup (customers who already tapped Join)</Typography>
+                        <TextField fullWidth label="Welcome Title" name="welcomeTitle" defaultValue={settings.welcomeTitle} />
+                        <TextField fullWidth multiline rows={2} label="Welcome Description" name="welcomeDescription" defaultValue={settings.welcomeDescription} />
+                        <TextField fullWidth label="Welcome Button Text" name="welcomeButtonText" defaultValue={settings.welcomeButtonText} />
                     </Box>
                 </Box>
 

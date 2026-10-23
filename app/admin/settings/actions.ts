@@ -93,6 +93,9 @@ export interface LoyaltySettings {
     joinButtonText: string;
     skipButtonText: string;
     pointsButtonText: string;
+    welcomeTitle: string;
+    welcomeDescription: string;
+    welcomeButtonText: string;
     image?: string;
 }
 
@@ -107,6 +110,9 @@ const DEFAULT_LOYALTY_SETTINGS: LoyaltySettings = {
     joinButtonText: 'Start Earning, It\'s Free',
     skipButtonText: 'No thanks, I\'ll skip the rewards',
     pointsButtonText: 'My Points',
+    welcomeTitle: 'Welcome Back! ⭐',
+    welcomeDescription: 'Your points are adding up.\nCheck your balance and see how close you are to $10 OFF.',
+    welcomeButtonText: 'Check My Points',
     image: '',
 };
 
@@ -144,6 +150,9 @@ export async function saveLoyaltySettings(formData: FormData) {
         joinButtonText: text('joinButtonText'),
         skipButtonText: text('skipButtonText'),
         pointsButtonText: text('pointsButtonText'),
+        welcomeTitle: text('welcomeTitle'),
+        welcomeDescription: text('welcomeDescription'),
+        welcomeButtonText: text('welcomeButtonText'),
         image,
     };
 
