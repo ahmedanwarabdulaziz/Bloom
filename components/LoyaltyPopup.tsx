@@ -2,14 +2,13 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { ArrowBack, Close, Stars } from "@mui/icons-material";
+import { Close, Stars } from "@mui/icons-material";
 import { motion, AnimatePresence } from "framer-motion";
 import Clarity from "@microsoft/clarity";
 import type { LoyaltySettings } from "../app/admin/settings/actions";
 import { trackLoyaltyEvent, LoyaltyEvent } from "../app/menu/tracking";
 
 const POPUP_DELAY_MS = 1500;
-const SQUARE_RENDER_DELAY_MS = 2000;
 const NFC_SOURCE = "nfc";
 const KEY_LAST_VISIT = "bloom_last_visit_day";
 const KEY_POPUP_SHOWN = "bloom_loyalty_popup_day";
@@ -38,9 +37,6 @@ const track = (event: LoyaltyEvent, firstVisitToday = false) => {
 
 export default function LoyaltyPopup({ settings }: { settings: LoyaltySettings }) {
     const [open, setOpen] = useState(false);
-    // Square's page opens in an in-page panel so customers never leave the menu.
-    const [squareOpen, setSquareOpen] = useState(false);
-    const [squareLoading, setSquareLoading] = useState(true);
 
     useEffect(() => {
         const day = today();
@@ -71,17 +67,6 @@ export default function LoyaltyPopup({ settings }: { settings: LoyaltySettings }
         track("popup_join");
         storageSet(KEY_JOINED, "1");
         setOpen(false);
-        openSquare();
-    };
-
-    const handlePoints = () => {
-        track("points_click");
-        openSquare();
-    };
-
-    const openSquare = () => {
-        setSquareLoading(true);
-        setSquareOpen(true);
     };
 
     const handleSkip = () => {
@@ -92,60 +77,19 @@ export default function LoyaltyPopup({ settings }: { settings: LoyaltySettings }
     return (
         <>
             {settings.pointsButtonEnabled && settings.squareLink && (
-                <button
-                    onClick={handlePoints}
+                // Square opens in a new tab: Safari blocks Square's login cookies inside an embedded frame,
+                // which breaks the SMS code step on iPhones. The menu stays open in the original tab.
+                <a
+                    href={settings.squareLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => track("points_click")}
                     className="fixed bottom-5 right-5 z-40 flex items-center gap-2 bg-accent-main text-background font-bold text-sm px-4 py-3 rounded-full shadow-xl border border-accent-main-hover active:scale-95 transition-transform"
                 >
                     <Stars fontSize="small" />
                     {settings.pointsButtonText}
-                </button>
+                </a>
             )}
-
-            <AnimatePresence>
-                {squareOpen && (
-                    <motion.div
-                        key="square-panel"
-                        initial={{ y: "100%" }}
-                        animate={{ y: 0 }}
-                        exit={{ y: "100%" }}
-                        transition={{ duration: 0.3, ease: "easeOut" }}
-                        className="fixed inset-0 z-[110] bg-background flex flex-col"
-                    >
-                        <div className="shrink-0 flex items-center justify-between gap-3 px-4 py-3 border-b border-border bg-background">
-                            <button
-                                onClick={() => setSquareOpen(false)}
-                                className="flex items-center gap-1.5 bg-accent-main text-background font-bold text-sm px-4 py-2 rounded-full active:scale-95 transition-transform"
-                            >
-                                <ArrowBack fontSize="small" />
-                                Back to menu
-                            </button>
-                            <a
-                                href={settings.squareLink}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-muted-text text-xs underline"
-                            >
-                                Not loading? Open here
-                            </a>
-                        </div>
-                        <div className="relative flex-1 w-full bg-white">
-                            <iframe
-                                src={settings.squareLink}
-                                title="Bloom Rewards"
-                                // Square's page fires load before its app has drawn anything, so keep the spinner a bit longer.
-                                onLoad={() => setTimeout(() => setSquareLoading(false), SQUARE_RENDER_DELAY_MS)}
-                                className="absolute inset-0 w-full h-full border-0"
-                            />
-                            {squareLoading && (
-                                <div className="absolute inset-0 z-10 bg-white flex flex-col items-center justify-center gap-3 text-gray-500 text-sm">
-                                    <div className="h-8 w-8 rounded-full border-2 border-gray-300 border-t-[#224735] animate-spin" />
-                                    Loading Bloom Rewards...
-                                </div>
-                            )}
-                        </div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
 
             <AnimatePresence>
                 {open && (
@@ -194,12 +138,15 @@ export default function LoyaltyPopup({ settings }: { settings: LoyaltySettings }
                                     {settings.description}
                                 </p>
 
-                                <button
+                                <a
+                                    href={settings.squareLink}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
                                     onClick={handleJoin}
                                     className="mt-6 block w-full bg-accent-main hover:bg-accent-main-hover text-background font-bold py-3 rounded-full shadow-md active:scale-95 transition-all"
                                 >
                                     {settings.joinButtonText}
-                                </button>
+                                </a>
                                 <button
                                     onClick={handleSkip}
                                     className="mt-3 w-full text-muted-text text-sm py-2 hover:text-main-text transition-colors"
