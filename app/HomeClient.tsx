@@ -5,6 +5,8 @@ import Image from "next/image";
 import { ArrowForward, LocalDining, SmokingRooms, Star, Instagram, Facebook } from "@mui/icons-material";
 import { MenuItem } from "./admin/menu-items/actions";
 
+const MENU_PHOTOS = "https://pub-03f42476f4324996812e6d8a983be0f0.r2.dev/menu-items";
+
 interface HomeClientProps {
     featuredItems: MenuItem[];
 }
@@ -47,16 +49,13 @@ export default function HomeClient({ featuredItems }: HomeClientProps) {
                         <Image src="/images/general/02.png" alt="Bloom Logo" fill className="object-contain" priority />
                     </div>
                     <span className="text-accent-main font-bold tracking-[0.2em] uppercase text-sm md:text-base mb-4 drop-shadow-md">
-                        {/* TODO: replace with Bloom's own tagline/location */}
                         WELCOME TO BLOOM
                     </span>
                     <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-tight text-white drop-shadow-xl uppercase leading-[1.1] mb-6">
-                        {/* TODO: replace with Bloom's own headline */}
                         Bloom
                     </h1>
                     <p className="text-gray-300 text-base sm:text-lg md:text-xl font-medium tracking-wide drop-shadow-md max-w-2xl mx-auto mb-10">
-                        {/* TODO: replace with Bloom's own description */}
-                        Placeholder description — update with Bloom&apos;s copy.
+                        Restaurant and coffee shop on Concession Street, Hamilton.
                     </p>
                     <Link href="/menu" className="group">
                         <button className="relative overflow-hidden bg-white/10 backdrop-blur-md border border-white/20 text-white font-bold px-10 py-4 rounded-full text-lg shadow-[0_8px_32px_rgba(212,175,55,0.2)] flex items-center justify-center transition-all duration-300 hover:bg-accent-main hover:border-accent-main active:scale-[0.98]">
@@ -79,13 +78,12 @@ export default function HomeClient({ featuredItems }: HomeClientProps) {
             {/* 2. About / Concept Section */}
             <section className="relative w-full py-24 px-6 md:px-12 bg-background flex flex-col items-center">
                 <div className="max-w-4xl mx-auto text-center space-y-8">
-                    {/* TODO: replace with Bloom's own about copy */}
                     <h2 className="text-3xl md:text-5xl font-bold text-white tracking-tight">
                         Welcome to <span className="text-accent-main">Bloom.</span>
                     </h2>
                     <div className="w-24 h-1 bg-gradient-to-r from-transparent via-accent-main to-transparent mx-auto rounded-full opacity-50" />
                     <p className="text-lg md:text-2xl text-muted-text leading-relaxed font-light">
-                        Placeholder description — update with Bloom&apos;s copy.
+                        Breakfast, mandi, traditional plates, desserts and coffee.
                     </p>
                 </div>
             </section>
@@ -144,13 +142,12 @@ export default function HomeClient({ featuredItems }: HomeClientProps) {
                         <div className="flex flex-col text-center rounded-[var(--radius-card)] glass border border-white/5 hover:border-accent-main/30 transition-all duration-300 group overflow-hidden hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(212,175,55,0.15)]">
                             <div className="relative w-full h-56 md:h-64 overflow-hidden bg-background">
                                 <div className="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent z-10" />
-                                <Image src="/images/general/01.png" alt="Highlight 1" fill className="object-cover transition-transform duration-700 group-hover:scale-110" />
+                                <Image src={`${MENU_PHOTOS}/a7a246b7-e542-41f6-82f1-ebb8e402c512.webp`} alt="Avocado & Egg Toast" fill className="object-cover transition-transform duration-700 group-hover:scale-110" />
                             </div>
                             <div className="p-8 pt-6 relative z-20 bg-surface">
-                                {/* TODO: replace with Bloom's own highlight copy */}
-                                <h3 className="text-2xl font-bold text-white mb-4 tracking-wide group-hover:text-accent-main transition-colors duration-300">Highlight One</h3>
+                                <h3 className="text-2xl font-bold text-white mb-4 tracking-wide group-hover:text-accent-main transition-colors duration-300">Breakfast</h3>
                                 <p className="text-muted-text text-base leading-relaxed">
-                                    Placeholder description — update with Bloom&apos;s copy.
+                                    Omelettes, shakshuka, avocado toast and buttery croissants to start your day.
                                 </p>
                             </div>
                         </div>
@@ -158,13 +155,12 @@ export default function HomeClient({ featuredItems }: HomeClientProps) {
                         <div className="flex flex-col text-center rounded-[var(--radius-card)] glass border border-white/5 hover:border-accent-main/30 transition-all duration-300 group overflow-hidden hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(212,175,55,0.15)]">
                             <div className="relative w-full h-56 md:h-64 overflow-hidden bg-background">
                                 <div className="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent z-10" />
-                                <Image src="/images/general/02.png" alt="Highlight 2" fill className="object-cover transition-transform duration-700 group-hover:scale-110" />
+                                <Image src="/images/general/01.png" alt="Bloom drinks served at the table" fill className="object-cover transition-transform duration-700 group-hover:scale-110" />
                             </div>
                             <div className="p-8 pt-6 relative z-20 bg-surface">
-                                {/* TODO: replace with Bloom's own highlight copy */}
-                                <h3 className="text-2xl font-bold text-white mb-4 tracking-wide group-hover:text-accent-main transition-colors duration-300">Highlight Two</h3>
+                                <h3 className="text-2xl font-bold text-white mb-4 tracking-wide group-hover:text-accent-main transition-colors duration-300">Coffee &amp; Drinks</h3>
                                 <p className="text-muted-text text-base leading-relaxed">
-                                    Placeholder description — update with Bloom&apos;s copy.
+                                    Espresso classics, pistachio and Spanish lattes, matcha, karak tea, milkshakes and mojitos.
                                 </p>
                             </div>
                         </div>
@@ -172,7 +168,7 @@ export default function HomeClient({ featuredItems }: HomeClientProps) {
                         <div className="flex flex-col text-center rounded-[var(--radius-card)] glass border border-white/5 hover:border-accent-main/30 transition-all duration-300 group overflow-hidden hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(212,175,55,0.15)]">
                             <div className="relative w-full h-56 md:h-64 overflow-hidden bg-background">
                                 <div className="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent z-10" />
-                                <Image src="/images/general/03.png" alt="Groups & Celebrations" fill className="object-cover transition-transform duration-700 group-hover:scale-110" />
+                                <Image src={`${MENU_PHOTOS}/6a89f7e2-66d8-44b7-82e4-452a1fefe629.webp`} alt="Bloom Mix sharing platter" fill className="object-cover transition-transform duration-700 group-hover:scale-110" />
                             </div>
                             <div className="p-8 pt-6 relative z-20 bg-surface">
                                 <h3 className="text-2xl font-bold text-white mb-4 tracking-wide group-hover:text-accent-main transition-colors duration-300">Groups &amp; Celebrations</h3>
@@ -204,16 +200,16 @@ export default function HomeClient({ featuredItems }: HomeClientProps) {
                         {[...Array(2)].map((_, groupIdx) => (
                             <div key={groupIdx} className="flex gap-4 md:gap-8 px-2 md:px-4">
                                 <div className="relative w-64 h-40 md:w-[450px] md:h-[300px] rounded-card overflow-hidden group border border-white/5">
-                                    <Image src="/images/general/01.png" alt="Gallery 1" fill className="object-cover transition-transform duration-700 group-hover:scale-110" />
+                                    <Image src="/images/general/01.png" alt="A table set with food and drinks at Bloom" fill className="object-cover transition-transform duration-700 group-hover:scale-110" />
                                 </div>
                                 <div className="relative w-64 h-40 md:w-[450px] md:h-[300px] rounded-card overflow-hidden group border border-white/5">
-                                    <Image src="/images/general/02.png" alt="Gallery 2" fill className="object-cover transition-transform duration-700 group-hover:scale-110" />
+                                    <Image src={`${MENU_PHOTOS}/55fbfd6f-1576-4f13-bd90-1dedd69b061c.webp`} alt="Mandi (Chicken)" fill className="object-cover transition-transform duration-700 group-hover:scale-110" />
                                 </div>
                                 <div className="relative w-64 h-40 md:w-[450px] md:h-[300px] rounded-card overflow-hidden group border border-white/5">
-                                    <Image src="/images/general/as2d21w5.png" alt="Gallery 3" fill className="object-cover transition-transform duration-700 group-hover:scale-110" />
+                                    <Image src={`${MENU_PHOTOS}/66fddb98-6481-47d7-8837-2a381578808a.webp`} alt="Motafaya Fish" fill className="object-cover transition-transform duration-700 group-hover:scale-110" />
                                 </div>
                                 <div className="relative w-64 h-40 md:w-[450px] md:h-[300px] rounded-card overflow-hidden group border border-white/5">
-                                    <Image src="/images/general/03.png" alt="Gallery 4" fill className="object-cover transition-transform duration-700 group-hover:scale-110" />
+                                    <Image src={`${MENU_PHOTOS}/47b5e701-a409-4108-9af5-acfbfe2a704b.webp`} alt="Mandi (Lamb)" fill className="object-cover transition-transform duration-700 group-hover:scale-110" />
                                 </div>
                             </div>
                         ))}

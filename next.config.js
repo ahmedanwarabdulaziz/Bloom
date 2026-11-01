@@ -12,6 +12,9 @@ const nextConfig = {
             },
         ],
     },
+    async redirects() {
+        return [{ source: '/welcome', destination: '/menu', permanent: false }];
+    },
 };
 
 module.exports = nextConfig;
