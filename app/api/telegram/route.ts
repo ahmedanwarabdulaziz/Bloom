@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidateTag } from 'next/cache';
 import { adminDb } from '@/lib/firebase-admin';
 import { getLoyaltyStats } from '@/app/admin/dashboard/actions';
 import { getLoyaltySettings } from '@/app/admin/settings/actions';
+import { PUBLIC_DATA_TAG } from '@/lib/cache-tags';
 import {
     allowedChatIds, formatReport, rangeKeyboard, reportKeyboard, settingsMessage,
     REPORT_BUTTON, SETTINGS_BUTTON, sendTelegramMessage, telegramCall,
@@ -50,6 +52,7 @@ export async function POST(req: NextRequest) {
                 const current = await getLoyaltySettings();
                 const updated = { ...current, [key]: !current[key] };
                 await adminDb.doc('settings/loyalty').set({ [key]: updated[key] }, { merge: true });
+                revalidateTag(PUBLIC_DATA_TAG);
 
                 const label = key === 'popupEnabled' ? 'Popup' : 'My Points button';
                 await telegramCall('answerCallbackQuery', {

@@ -1,15 +1,13 @@
-import { getCategories } from "../admin/categories/actions";
-import { getMenuItems } from "../admin/menu-items/actions";
-import { getLoyaltySettings } from "../admin/settings/actions";
+import { getCachedCategories, getCachedLoyaltySettings, getCachedMenuItems } from "@/lib/public-data";
 import MenuClient from "./MenuClient";
 
 export const dynamic = 'force-dynamic';
 
 export default async function MenuPage() {
     const [categories, items, loyalty] = await Promise.all([
-        getCategories(),
-        getMenuItems(),
-        getLoyaltySettings()
+        getCachedCategories(),
+        getCachedMenuItems(),
+        getCachedLoyaltySettings()
     ]);
 
     // Ensure we have some categories if empty to prevent UI breakage

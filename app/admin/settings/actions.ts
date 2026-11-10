@@ -2,7 +2,8 @@
 
 import { adminDb } from '@/lib/firebase-admin';
 import { uploadFileToR2 } from '@/lib/storage-utils';
-import { revalidatePath } from 'next/cache';
+import { revalidatePath, revalidateTag } from 'next/cache';
+import { PUBLIC_DATA_TAG } from '@/lib/cache-tags';
 
 export interface HomepageSettings {
     topAdImage: string;
@@ -80,6 +81,7 @@ export async function saveHomepageSettings(formData: FormData) {
 
     await adminDb.doc(SETTINGS_DOC_PATH).set(data, { merge: true });
 
+    revalidateTag(PUBLIC_DATA_TAG);
     revalidatePath('/admin/settings');
     revalidatePath('/');
 }
@@ -158,6 +160,7 @@ export async function saveLoyaltySettings(formData: FormData) {
 
     await adminDb.doc(LOYALTY_DOC_PATH).set(data, { merge: true });
 
+    revalidateTag(PUBLIC_DATA_TAG);
     revalidatePath('/admin/settings');
     revalidatePath('/menu');
 }

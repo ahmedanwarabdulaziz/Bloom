@@ -2,7 +2,8 @@
 
 import { adminDb } from '@/lib/firebase-admin';
 import { uploadFileToR2 } from '@/lib/storage-utils';
-import { revalidatePath } from 'next/cache';
+import { revalidatePath, revalidateTag } from 'next/cache';
+import { PUBLIC_DATA_TAG } from '@/lib/cache-tags';
 import { getCategories } from '../categories/actions'; // Reuse to get category names if needed
 
 export interface ServingDetails {
@@ -137,11 +138,13 @@ export async function saveMenuItem(formData: FormData) {
         });
     }
 
+    revalidateTag(PUBLIC_DATA_TAG);
     revalidatePath('/admin/menu-items');
 }
 
 export async function deleteMenuItem(id: string) {
     await adminDb.collection(COLLECTION).doc(id).delete();
+    revalidateTag(PUBLIC_DATA_TAG);
     revalidatePath('/admin/menu-items');
 }
 
@@ -152,5 +155,6 @@ export async function reorderMenuItems(items: { id: string, order: number }[]) {
         batch.update(ref, { order });
     });
     await batch.commit();
+    revalidateTag(PUBLIC_DATA_TAG);
     revalidatePath('/admin/menu-items');
 }

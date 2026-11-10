@@ -2,7 +2,8 @@
 
 import { adminDb } from '@/lib/firebase-admin';
 import { uploadFileToR2 } from '@/lib/storage-utils';
-import { revalidatePath } from 'next/cache';
+import { revalidatePath, revalidateTag } from 'next/cache';
+import { PUBLIC_DATA_TAG } from '@/lib/cache-tags';
 
 export interface Category {
     id: string;
@@ -76,11 +77,13 @@ export async function saveCategory(formData: FormData) {
         });
     }
 
+    revalidateTag(PUBLIC_DATA_TAG);
     revalidatePath('/admin/categories');
 }
 
 export async function deleteCategory(id: string) {
     await adminDb.collection(COLLECTION).doc(id).delete();
+    revalidateTag(PUBLIC_DATA_TAG);
     revalidatePath('/admin/categories');
 }
 
@@ -93,5 +96,6 @@ export async function reorderCategories(items: { id: string, order: number }[]) 
     });
 
     await batch.commit();
+    revalidateTag(PUBLIC_DATA_TAG);
     revalidatePath('/admin/categories');
 }
